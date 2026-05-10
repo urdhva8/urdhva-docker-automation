@@ -1,0 +1,41 @@
+
+#pipelines = workflows
+
+name: Tanusha sample docker project workflow
+
+on:
+  push: 
+    branches:
+      - development  #branch_1
+      - UAT          #branch_2
+      - main         #branch_3
+
+#optional
+env:
+  Source_name: tanusha-app
+  deploy_name: purnima-shopping-app
+
+jobs:
+  - name: findout developers
+    if (branch_name = development and sourcename= tanusha-app and purnima-shopping-app) then
+    steps:
+      - finding architect
+      - finding senior developer
+      - finding juniors
+
+  - name: findout databases
+    if (branch_name = development and sourcename= tanusha-app) then
+    steps:
+      - finding correct database
+      - finding storage capacity
+
+  - name: findout where to host
+    if (branch_name = development and sourcename= tanusha-app) then
+
+  - name: findout QA
+    if (branch_name = UAT and sourcename= tanusha-app and purnima-shopping-app) then
+
+  - name: findout userbase
+
+  - name: findout accessories for shopping
+    if (branch_name = development and sourcename= tanusha-app and purnima-shopping-app) then
