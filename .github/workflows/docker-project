@@ -1,4 +1,4 @@
-name: Tanusha Docker Deployment
+name: Urdhva Docker Deployment
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-west-2
+          aws-region: eu-north-1
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -28,7 +28,7 @@ jobs:
       - name: Build, Tag, and Push Docker Image to Amazon ECR
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: tanusha-sample-docker
+          REPOSITORY: docker-workflow
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
@@ -45,7 +45,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-west-2
+          aws-region: eu-north-1
 
       - name: Execute Remote SSH Commands
         uses: appleboy/ssh-action@v1.0.3
@@ -56,6 +56,6 @@ jobs:
           port: 22
           script: |
             whoami
-            aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 794934876309.dkr.ecr.us-west-2.amazonaws.com
-            docker pull 794934876309.dkr.ecr.us-west-2.amazonaws.com/tanusha-sample-docker:${{ github.sha }}
-            docker run -itd -p 5050:5050 --name tanusha-app 794934876309.dkr.ecr.us-west-2.amazonaws.com/tanusha-sample-docker:${{ github.sha }}      
+            aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 720459752207.dkr.ecr.eu-north-1.amazonaws.com            
+            docker pull 720459752207.dkr.ecr.eu-north-1.amazonaws.com/docker-workflow:${{ github.sha }}
+            docker run -itd -p 5050:5050 --name urdhva-app 720459752207.dkr.ecr.eu-north-1.amazonaws.com/docker-workflow:${{ github.sha }}      
